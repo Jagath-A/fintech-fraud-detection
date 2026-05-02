@@ -1,0 +1,2 @@
+amount,avg_user_amount,amount_deviation,prediction,risk,time,transaction_id,transaction_frequency,transaction_velocity,device_change,location_change,new_device_flag,account_balance,distance_from_last_transaction
+500.0,2000.0,,0,0.2193740836221833,2026-05-02 10:32:17.140814,,10.0,2.0,0.0,0.0,0.0,50000.0,5.0
