@@ -138,7 +138,7 @@ if not model_ready:
 
 st.markdown("---")
 
-if st.button("Screen Transaction", type="primary", use_container_width=True):
+if st.button("Screen Transaction", type="primary", width="stretch"):
     # Validate inputs
     if amount == 0 and avg_user_amount == 0:
         st.warning("Please enter at least one non-zero amount to proceed")
@@ -294,7 +294,7 @@ if st.session_state.get("has_prediction", False):
             block_btn = st.button(
                 "Block Transaction",
                 key="block_btn",
-                use_container_width=True,
+                width="stretch",
                 help="Immediately decline this transaction"
             )
             if block_btn:
@@ -304,7 +304,7 @@ if st.session_state.get("has_prediction", False):
             investigate_btn = st.button(
                 "Flag for Review",
                 key="investigate_btn",
-                use_container_width=True,
+                width="stretch",
                 help="Flag for further review by fraud team"
             )
             if investigate_btn:
@@ -318,7 +318,7 @@ if st.session_state.get("has_prediction", False):
             review_btn = st.button(
                 "Override & Approve",
                 key="approve_btn",
-                use_container_width=True,
+                width="stretch",
                 help="Override and approve transaction after verification"
             )
             if review_btn:
@@ -368,7 +368,7 @@ if st.session_state.get("has_prediction", False):
             st.caption("Optionally log this transaction for record-keeping")
         
         with log_col2:
-            if st.button("Log Transaction", use_container_width=True):
+            if st.button("Log Transaction", width="stretch"):
                 try:
                     save_alert(data, pred, risk)
                     st.success("Transaction logged to system.")

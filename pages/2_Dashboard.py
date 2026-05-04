@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from utils.ui import apply_fintech_theme, format_inr
 
 st.set_page_config(page_title="Dashboard", layout="wide")
@@ -62,7 +66,7 @@ if os.path.exists(alerts_path):
                     fig = px.pie(fraud_dist, values='Count', names='Status', 
                                 title="Transaction Status", color='Status',
                                 color_discrete_map={'Fraud': '#ff4444', 'Legitimate': '#44ff44'})
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
             
             with col2:
                 st.subheader("Risk Score Distribution")
@@ -71,7 +75,7 @@ if os.path.exists(alerts_path):
                                       title="Risk Score Distribution",
                                       labels={'risk': 'Risk Score', 'count': 'Frequency'})
                     fig.update_traces(marker_color='#ff8844')
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
             
             st.divider()
             
@@ -83,7 +87,7 @@ if os.path.exists(alerts_path):
                     fig = px.box(df, y='amount', 
                                 title="Transaction Amount Distribution",
                                 labels={'amount': 'Transaction Amount (₹)'})
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width="stretch")
             
             with col2:
                 st.subheader("Amount Deviation vs Risk")
@@ -95,7 +99,7 @@ if os.path.exists(alerts_path):
                                         title="Amount Deviation vs Risk Score",
                                         labels={'amount_deviation': 'Deviation (₹)', 'risk': 'Risk Score'},
                                         color_discrete_map={'Fraud': '#ff4444', 'Legitimate': '#44ff44'})
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, width="stretch")
         else:
             st.info("No data available yet. Use Transaction Analyzer to see dashboard visualizations.")
             

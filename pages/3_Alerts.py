@@ -1,6 +1,10 @@
 import streamlit as st
 import pandas as pd
 import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from utils.ui import apply_fintech_theme, format_inr
 
 st.set_page_config(page_title="Alerts", layout="wide")
@@ -170,7 +174,7 @@ if os.path.exists(alerts_path) and os.path.getsize(alerts_path) > 0:
                 
                 st.dataframe(
                     display_df,
-                    use_container_width=True,
+                    width="stretch",
                     hide_index=True,
                     column_config={
                         "Time": st.column_config.TextColumn(width="small"),

@@ -32,15 +32,15 @@ def download_file(url, path, timeout=30):
         # Verify file is not empty
         file_size = os.path.getsize(path)
         if file_size > 100:  # Pickle files should be at least 100 bytes
-            print(f"✓ File already exists: {os.path.basename(path)} ({file_size} bytes)")
+            print(f"OK: File already exists: {os.path.basename(path)} ({file_size} bytes)")
             return True
         else:
-            print(f"⚠ File exists but is too small ({file_size} bytes). Removing and re-downloading...")
+            print(f"Warning: File exists but is too small ({file_size} bytes). Removing and re-downloading...")
             os.remove(path)
     
     # File doesn't exist, try to download it
     try:
-        print(f"⏳ Downloading {os.path.basename(path)}...")
+        print(f"Downloading {os.path.basename(path)}...")
         os.makedirs(os.path.dirname(path), exist_ok=True)
         
         response = requests.get(url, timeout=timeout, stream=True, allow_redirects=True)
@@ -61,21 +61,21 @@ def download_file(url, path, timeout=30):
         final_size = os.path.getsize(path)
         
         if final_size > 100:  # Pickle files should be at least 100 bytes
-            print(f"✓ Successfully downloaded: {os.path.basename(path)} ({final_size} bytes)")
+            print(f"OK: Successfully downloaded: {os.path.basename(path)} ({final_size} bytes)")
             return True
         else:
-            print(f"✗ Downloaded file is too small ({final_size} bytes): {os.path.basename(path)}")
+            print(f"Error: Downloaded file is too small ({final_size} bytes): {os.path.basename(path)}")
             os.remove(path)
             return False
             
     except requests.exceptions.Timeout:
-        print(f"✗ Download timeout for {os.path.basename(path)}")
+        print(f"Error: Download timeout for {os.path.basename(path)}")
         return False
     except requests.exceptions.RequestException as e:
-        print(f"✗ Download error for {os.path.basename(path)}: {str(e)}")
+        print(f"Error: Download error for {os.path.basename(path)}: {str(e)}")
         return False
     except IOError as e:
-        print(f"✗ File write error: {str(e)}")
+        print(f"Error: File write error: {str(e)}")
         return False
 
 
@@ -92,7 +92,7 @@ def load_models():
         scaler_ok = download_file(SCALER_URL, SCALER_PATH)
         
         if not model_ok or not scaler_ok:
-            print("✗ Failed to obtain required model files")
+            print("Error: Failed to obtain required model files")
             return None, None
         
         # Try to load the models with better error diagnostics
@@ -100,20 +100,20 @@ def load_models():
         scaler = None
         
         try:
-            print(f"⏳ Loading model from {os.path.basename(MODEL_PATH)}...")
+            print(f"Loading model from {os.path.basename(MODEL_PATH)}...")
             model_file_size = os.path.getsize(MODEL_PATH)
             print(f"  File size: {model_file_size} bytes")
             
             model = joblib.load(MODEL_PATH)
-            print("✓ Model loaded successfully")
+            print("OK: Model loaded successfully")
         except EOFError as e:
-            print(f"✗ Failed to load model: File appears corrupted (EOFError)")
+            print("Error: Failed to load model: File appears corrupted (EOFError)")
             print(f"  The downloaded file may be incomplete. Removing and retrying...")
             if os.path.exists(MODEL_PATH):
                 os.remove(MODEL_PATH)
             model = None
         except Exception as e:
-            print(f"✗ Failed to load model: {type(e).__name__}: {str(e)}")
+            print(f"Error: Failed to load model: {type(e).__name__}: {str(e)}")
             print(f"  File location: {MODEL_PATH}")
             print(f"  File exists: {os.path.exists(MODEL_PATH)}")
             if os.path.exists(MODEL_PATH):
@@ -121,20 +121,20 @@ def load_models():
             model = None
         
         try:
-            print(f"⏳ Loading scaler from {os.path.basename(SCALER_PATH)}...")
+            print(f"Loading scaler from {os.path.basename(SCALER_PATH)}...")
             scaler_file_size = os.path.getsize(SCALER_PATH)
             print(f"  File size: {scaler_file_size} bytes")
             
             scaler = joblib.load(SCALER_PATH)
-            print("✓ Scaler loaded successfully")
+            print("OK: Scaler loaded successfully")
         except EOFError as e:
-            print(f"✗ Failed to load scaler: File appears corrupted (EOFError)")
+            print("Error: Failed to load scaler: File appears corrupted (EOFError)")
             print(f"  The downloaded file may be incomplete. Removing and retrying...")
             if os.path.exists(SCALER_PATH):
                 os.remove(SCALER_PATH)
             scaler = None
         except Exception as e:
-            print(f"✗ Failed to load scaler: {type(e).__name__}: {str(e)}")
+            print(f"Error: Failed to load scaler: {type(e).__name__}: {str(e)}")
             scaler = None
         
         # If model failed to load, try downloading again
@@ -146,16 +146,16 @@ def load_models():
             model_ok = download_file(MODEL_URL, MODEL_PATH)
             if model_ok:
                 try:
-                    print(f"⏳ Retrying model load...")
+                    print("Retrying model load...")
                     model = joblib.load(MODEL_PATH)
-                    print("✓ Model loaded successfully on retry")
+                    print("OK: Model loaded successfully on retry")
                 except Exception as e:
-                    print(f"✗ Still unable to load model: {type(e).__name__}: {str(e)}")
+                    print(f"Error: Still unable to load model: {type(e).__name__}: {str(e)}")
         
         return model, scaler
         
     except Exception as e:
-        print(f"✗ Unexpected error during model loading: {type(e).__name__}: {str(e)}")
+        print(f"Error: Unexpected error during model loading: {type(e).__name__}: {str(e)}")
         return None, None
 
 

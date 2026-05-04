@@ -48,7 +48,7 @@ df_model = df[features_to_use + ['is_fraud']].copy()
 # Fill missing numeric values with median
 for col in features_to_use:
     if df_model[col].isnull().any():
-        df_model[col].fillna(df_model[col].median(), inplace=True)
+        df_model[col] = df_model[col].fillna(df_model[col].median())
         print(f"  Filled {df_model[col].isnull().sum()} missing values in {col}")
 
 # Prepare training data
@@ -96,9 +96,9 @@ joblib.dump(model, model_path)
 joblib.dump(scaler, scaler_path)
 joblib.dump(features_to_use, features_path)  # Save feature names
 
-print(f"✓ Model saved: {model_path} ({os.path.getsize(model_path)} bytes)")
-print(f"✓ Scaler saved: {scaler_path} ({os.path.getsize(scaler_path)} bytes)")
-print(f"✓ Features saved: {features_path} ({os.path.getsize(features_path)} bytes)")
+print(f"OK: Model saved: {model_path} ({os.path.getsize(model_path)} bytes)")
+print(f"OK: Scaler saved: {scaler_path} ({os.path.getsize(scaler_path)} bytes)")
+print(f"OK: Features saved: {features_path} ({os.path.getsize(features_path)} bytes)")
 
 # Test the model with sample transactions
 print("\nTesting with sample transactions...")
@@ -144,10 +144,10 @@ for idx, sample in enumerate(test_samples, 1):
     pred = model.predict(X_scaled)[0]
     prob = model.predict_proba(X_scaled)[0][1]
     
-    status = "⚠️ FRAUD" if pred == 1 else "✓ LEGITIMATE"
+    status = "FRAUD" if pred == 1 else "LEGITIMATE"
     print(f"\n  Transaction {idx}:")
     print(f"    Amount: {format_inr(sample['amount'])} (Avg: {format_inr(sample['avg_user_amount'])})")
     print(f"    Velocity: {sample['transaction_velocity']}, Device Change: {sample['device_change']}")
     print(f"    Prediction: {status} ({prob:.1%} fraud risk)")
 
-print("\n✓ All tests passed! Models are ready for use.")
+print("\nOK: All tests passed! Models are ready for use.")
