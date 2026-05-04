@@ -7,11 +7,16 @@ from utils.ui import apply_fintech_theme, format_inr
 st.set_page_config(page_title="Dashboard", layout="wide")
 apply_fintech_theme()
 
-st.title("Dashboard")
+st.title("📊 Analytics Dashboard")
 
 st.markdown("""
-Comprehensive visualization of fraud detection metrics and patterns.
+**Comprehensive visualization of fraud detection metrics and patterns.**
+
+Track key performance indicators, fraud trends, transaction volumes, and risk distribution 
+across your Indian fintech operations.
 """)
+
+st.markdown("---")
 
 alerts_path = "data/alerts.csv"
 

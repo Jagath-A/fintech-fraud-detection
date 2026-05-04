@@ -1,8 +1,11 @@
 [theme]
 base = "light"
-primaryColor = "#0F766E"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F3F4F6"
-textColor = "#111827"
+primaryColor = "#1e40af"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8fafc"
+textColor = "#0f172a"
 font = "sans serif"
+
+[client]
+showErrorDetails = true
 

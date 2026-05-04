@@ -12,8 +12,13 @@ st.set_page_config(page_title="Transaction Analyzer", layout="wide")
 
 apply_fintech_theme()
 
-st.title("Transaction Analyzer")
-st.markdown("Real-time fraud detection for Indian digital payments and banking transactions")
+st.title("🔍 Transaction Analyzer")
+st.markdown("""
+**Real-time fraud detection for Indian digital payments and banking transactions.**
+
+Analyze any transaction in seconds. Get instant risk assessment based on behavioral patterns, 
+device changes, location anomalies, and more.
+""")
 
 # Check model status
 try:
@@ -25,12 +30,15 @@ except Exception as e:
     model_ready = False
 
 # Display model status in sidebar
-status_color = "green" if model_ready else "red"
-st.sidebar.markdown(f"**System Status**: `{model_status}`")
+status_indicator = "✅" if model_ready else "⏳"
+st.sidebar.markdown(f"**{status_indicator} System Status**: {model_status}")
+
+if not model_ready:
+    st.warning("⏳ System initializing. Models will be available in a moment.")
 
 st.markdown("---")
 
-st.markdown("### Transaction Information")
+st.markdown("### 📋 Transaction Information")
 
 # Create tabs for better organization
 tab1, tab2, tab3 = st.tabs(["Amount & Profile", "Behavior Indicators", "Account Details"])

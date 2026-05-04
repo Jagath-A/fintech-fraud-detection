@@ -7,8 +7,15 @@ st.set_page_config(page_title="Alerts", layout="wide")
 apply_fintech_theme()
 
 # Page header
-st.title("Transaction Alerts")
-st.markdown("Monitor and review all flagged transactions")
+st.title("⚠️ Transaction Alerts")
+st.markdown("""
+**Monitor and review all flagged transactions.**
+
+Comprehensive alert management for suspicious activities. Filter, analyze, and investigate 
+transactions that may require manual review or immediate action.
+""")
+
+st.markdown("---")
 
 alerts_path = "data/alerts.csv"
 

@@ -9,23 +9,63 @@ st.set_page_config(
 apply_fintech_theme()
 
 # ---- MAIN PAGE ----
-st.title("Indian Fintech Fraud Detection System")
+col1, col2 = st.columns([3, 1])
+
+with col1:
+    st.title("🛡️ Indian Fintech Fraud Detection System")
 
 st.markdown("""
-Clean, professional transaction monitoring for Indian fintech operations.
-
-### Features:
-- Detect fraudulent transactions using Machine Learning
-- Risk scoring for each transaction
-- Alert system for suspicious activity
-- Transaction monitoring dashboard
+**Clean, professional transaction monitoring for Indian fintech operations.**
 
 ---
 
-### How to use:
-1. Go to **Transaction Analyzer** to screen transactions  
-2. Check **Alerts** page for flagged fraud cases  
-3. View **Dashboard** for insights  
+### ✨ Features:
+- **Real-time Screening**: Detect fraudulent transactions using advanced Machine Learning
+- **Risk Analysis**: Comprehensive fraud risk scoring for every transaction (₹ amounts)
+- **Alert System**: Automatic flagging of suspicious activities for manual review
+- **Analytics Dashboard**: Visual insights into fraud patterns and transaction trends
+- **Indian Context**: Built specifically for Indian digital payments and banking
+
+---
+
+### 🚀 Quick Start:
 """)
 
-st.info("Use the sidebar to navigate between pages")
+col1, col2, col3 = st.columns(3, gap="large")
+
+with col1:
+    st.markdown("""
+    ### 1️⃣ Analyze Transactions
+    
+    Use the **Transaction Analyzer** to screen transactions in real-time. Input customer details, transaction amount (₹), and behavioral indicators for immediate fraud risk assessment.
+    """)
+
+with col2:
+    st.markdown("""
+    ### 2️⃣ Review Alerts
+    
+    Check the **Alerts** page to review all flagged transactions. Filter by fraud status, risk score, and apply custom thresholds to catch suspicious patterns.
+    """)
+
+with col3:
+    st.markdown("""
+    ### 3️⃣ Monitor Trends
+    
+    View the **Dashboard** for comprehensive fraud detection metrics, transaction distribution, and risk score patterns across your platform.
+    """)
+
+st.markdown("---")
+
+# System Information
+with st.container(border=True):
+    st.markdown("### 📊 System Status")
+    
+    import os
+    model_status = "✅ Ready" if os.path.exists("model/fraud_model.pkl") else "❌ Initializing"
+    data_status = "✅ Active" if os.path.exists("data/alerts.csv") else "⏳ Pending First Transaction"
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info(f"**ML Model**: {model_status}")
+    with col2:
+        st.info(f"**Transaction Log**: {data_status}")
